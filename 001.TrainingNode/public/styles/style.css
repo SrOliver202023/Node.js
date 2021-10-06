@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    font-family: 'Consolas';
+
+    list-style:none;
+    text-decoration:none;
+}
+
+body{
+    background-color: rgb(209, 219, 219);
+}
+
+header{
+    background-color: rgb(18, 48, 77);
+}
+nav{
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+}
+#navbar{
+    display: flex;
+
+}
+#navbar li{
+    background-color: rgba(12, 33, 53, 0.376);
+    border-radius: 8px;
+    padding: 10px;
+    margin-left: 10px;
+}
+#navbar li a {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 500px) {
+    #navbar{
+        display: none;
+    }
+}
