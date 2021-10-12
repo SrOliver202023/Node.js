@@ -1,5 +1,9 @@
-const { Sequelize } = require('sequelize');
+const mongoose = require('mongoose');
 
-const connection = new Sequelize({ dialect: 'sqlite', storage:'./database/db.sqlite'});
+const connection = mongoose.connect(process.env.CONNECTION, {
+  useNewUrlParser:true,
+  useUnifiedTopology:true
+});
 
+//useCreateIndex:true,
 module.exports = connection;

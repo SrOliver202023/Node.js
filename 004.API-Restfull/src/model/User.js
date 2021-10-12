@@ -1,13 +1,16 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 const connection = require('../connection');
 
-const User = connection.define('User', {
-  name: {type:DataTypes.STRING, minlength: 60},
-  age: {type:DataTypes.INTEGER, minlength: 3},
-  city: {type:DataTypes.STRING, minlength: 30},
-  uf: {type:DataTypes.STRING, minlength: 2},
-  email: {type:DataTypes.STRING, minlength: 100},
-  password: {type:DataTypes.STRING, minlength: 60}
+const userSchema = new Schema({
+  name: {type: String, minlength: 4},
+  age: {type: Number, minlength: 3},
+  city: {type: String, minlength: 3},
+  uf: {type: String, minlength: 2},
+  email: {type: String, minlength: 10},
+  password: {type: String, minlength: 6}
 })
+
+const User = mongoose.model('Users', userSchema);
 
 module.exports = User;

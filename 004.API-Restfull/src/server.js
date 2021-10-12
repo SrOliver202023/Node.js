@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const userRouter = require('./routes/userRouter');
 
-app.use(userRouter);
-
+const connection = require('./connection');
+connection.then(res => console.log('Success!')).catch(res => console.log('Failed!'))
 app.use(express.json());
 
-app.listen(process.env.PORT)
+const userRouter = require('./routes/userRouter');
+app.use(userRouter);
+
+app.listen(process.env.PORT, ()=>console.log('Running Server!'));
