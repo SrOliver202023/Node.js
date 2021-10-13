@@ -9,7 +9,7 @@ const userSchema = new Schema({
   uf: {type: String, minlength: 2},
   email: {type: String, minlength: 10},
   password: {type: String, minlength: 6}
-})
+});
 
 const User = mongoose.model('Users', userSchema);
 

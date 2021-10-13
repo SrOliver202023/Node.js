@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 const connection = require('./connection');
-connection.then(res => console.log('Success!')).catch(res => console.log('Failed!'))
+connection.then(res => console.log('Success!')).catch(error => console.log(error));
 app.use(express.json());
 
 const userRouter = require('./routes/userRouter');
