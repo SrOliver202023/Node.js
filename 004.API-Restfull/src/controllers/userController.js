@@ -1,12 +1,17 @@
 const BCrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
 const User = require('../model/User');
+const { registerValidate, loginValidate } = require('../validations/userValidation');
 
 module.exports = {
   register: async function(req, res){
 
+    const { error } = registerValidate(req.body);
+    if(error) return res.status(400).json({msgClient: error.message});
+
     const user ={
       name: req.body.name,
+      midleName: req.body.midleName,
       age: req.body.age,
       city: req.body.city,
       uf: req.body.uf,
@@ -22,7 +27,10 @@ module.exports = {
       .catch(error =>res.status(400).send("Error account doesn't created! "));
   },
   login: async function(req, res){
-    
+
+    const { error } = loginValidate(req.body);
+    if(error) return res.status(400).json({msgClient: error.message});
+
     const user = { email: req.body.email,password: req.body.password };
 
     const userInDataBase = await User.findOne({email:user.email});
@@ -36,37 +44,12 @@ module.exports = {
       id: userInDataBase._id,
       name: userInDataBase.name,
       email: userInDataBase.email
-
-    }, process.env.SECRET);
-    // , { expiresIn: 1 }
-    // testToken(userToken);
+      
+    }, process.env.SECRET, { expiresIn: parseInt(process.env.EXPIRATION_TIME) })
     res.header("authorization", userToken);
-    
-    const loggedUser = JWT.decode(req.header("authorization"), process.env.SECRET)
+    console.log(userToken);
 
-    console.log(loggedUser);
-    res.send(`Welcome "${loggedUser.name}"`);  
-  },
-  feed: async function(req, res){
+    res.status(200).send(`Welcome "${userInDataBase.name}"`);  
   }
-}
 
-
-
-
-
-
-
-
-
-
-const testToken = (getToken)=>{
-  let timeCheck = setInterval(() => {
-    try{
-      console.log(JWT.verify(getToken, process.env.SECRET));
-    }catch(err){
-      clearInterval(timeCheck);
-      console.log(`Token Expired!`);
-    };
-  }, 5);
 }
